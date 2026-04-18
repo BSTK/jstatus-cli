@@ -1,8 +1,22 @@
-echo "Construindo Jar ..."
+#!/bin/bash
+echo "➥ INICIANDO BUILD: jstatus-cli"
+echo "--------------------------------------------------"
 ./gradlew clean build shadowJar
 
-echo "Removendo Jar incompleto"
+echo "➥ removendo jar incompleto"
+echo "--------------------------------------------------"
 rm build/libs/jstatus-cli-1.0.0.jar
 
-echo "Executando Jar ..."
+if [ $? -eq 0 ]; then
+    echo "--------------------------------------------------"
+    echo "[ SUCCESS ] Build finalizado com sucesso!"
+    echo "[ FILE    ] build/libs/jstatus-cli.jar"
+    echo "--------------------------------------------------"
+else
+    echo "🅧 Erro no build. Verifique os logs acima."
+    exit 1
+fi
+
+echo "➥ EXECUTANDO jstatus-cli"
+echo "--------------------------------------------------"
 java -jar build/libs/jstatus-cli.jar
