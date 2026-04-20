@@ -28,6 +28,8 @@ ext {
     set("commonsLang3Version", "3.19.0")
     set("lombokVersion", "1.18.30")
     set("junitBomVersion", "5.10.0")
+    set("jacksonVersion", "2.17.0")
+    set("jlineVersion", "3.30.0")
 }
 
 shadowJar {
@@ -41,7 +43,10 @@ shadowJar {
 
 dependencies {
     // Dependency Implementation
+    implementation "org.jline:jline:${jlineVersion}"
     implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     // Dependency Compile, Runtime and Annotation Processor
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
