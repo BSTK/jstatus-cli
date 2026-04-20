@@ -13,28 +13,31 @@ public final class CodexRender {
 
   public void render(final Terminal terminal) {
     final var asb = new AttributedStringBuilder();
-    final var codexInfo = new CodexInfo(version.getInfo(), model.getInfo(), account.getInfo());
+    asb.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+        .append(dashboard());
 
-    asb.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN).bold())
-        .append("Codex")
-        .append("\n");
-
-    appendField(asb, "Version", codexInfo.version());
-    appendField(asb, "Model", codexInfo.model());
-    appendField(asb, "Account", codexInfo.account());
-
+    terminal.writer().print("\033[H");
     terminal.writer().println(asb.toAnsi());
     terminal.flush();
   }
 
-  private static void appendField(final AttributedStringBuilder asb,
-                                  final String label,
-                                  final String value) {
-    asb.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
-        .append(label)
-        .append(": ")
-        .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE))
-        .append(value)
-        .append("\n");
+  private String dashboard() {
+    return """
+        ╭─────────────────────────────────────────────────────────────────╮
+        │  >_ OpenAI Codex %-46s │
+        │                                                                 │
+        │ Visit https://chatgpt.com/codex/settings/usage for up-to-date   │
+        │ information on rate limits and credits                          │
+        │                                                                 │
+        │  Model:                %-40s │
+        │  Agents.md:            %-40s │
+        │  Account:              %-40s │
+        ╰─────────────────────────────────────────────────────────────────╯
+        """.formatted(
+        version.getInfo(),
+        model.getInfo(),
+        "AGENTS.md",
+        account.getInfo()
+    );
   }
 }
