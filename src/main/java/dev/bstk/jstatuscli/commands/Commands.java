@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 public enum Commands {
 
+  CODEX("c"),
   HELP("h"),
   EXIT("e"),
   QUIT("q"),

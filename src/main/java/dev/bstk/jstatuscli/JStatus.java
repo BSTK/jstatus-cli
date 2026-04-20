@@ -1,6 +1,7 @@
 package dev.bstk.jstatuscli;
 
 import dev.bstk.jstatuscli.commands.Command;
+import dev.bstk.jstatuscli.commands.CommandCodex;
 import dev.bstk.jstatuscli.commands.CommandExit;
 import dev.bstk.jstatuscli.commands.CommandHelp;
 import dev.bstk.jstatuscli.commands.CommandUnknow;
@@ -19,16 +20,13 @@ public final class JStatus {
   private static final String J_STATUS = "JStatus";
 
   private static final Map<Commands, Command> COMMANDS = Map.of(
+      Commands.CODEX, new CommandCodex(),
       Commands.HELP, new CommandHelp(),
       Commands.EXIT, new CommandExit(),
       Commands.QUIT, new CommandExit()
   );
 
   private JStatus() { }
-
-  public static Terminal getTerminal() {
-    return TerminalHolder.INSTANCE;
-  }
 
   public static void init() {
     final var terminal = getTerminal();
@@ -46,6 +44,10 @@ public final class JStatus {
 
       command.execute();
     }
+  }
+
+  public static Terminal getTerminal() {
+    return TerminalHolder.INSTANCE;
   }
 
   private static class TerminalHolder {
